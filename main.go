@@ -6,6 +6,7 @@ import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"regexp"
+	"strings"
 
 	hbot "github.com/whyrusleeping/hellabot"
 	log "gopkg.in/inconshreveable/log15.v2"
@@ -99,6 +100,7 @@ func main() {
 		panic(err)
 	}
 
+	irc.AddTrigger(helpTrigger)
 	irc.AddTrigger(karmaTrigger)
 	irc.Logger.SetHandler(log.StdoutHandler)
 
@@ -127,6 +129,17 @@ var karmaTrigger = hbot.Trigger{
 			irc.Reply(m, fmt.Sprintf("%v's karma got decresed to: %v", user, k.Get(user)))
 		}
 
+		return false
+	},
+}
+
+var rehelp *regexp.Regexp = regexp.MustCompile(`|^_^|`)
+var helpTrigger = hbot.Trigger{
+	Condition: func(bot *hbot.Bot, m *hbot.Message) bool {
+		return m.Command == "PRIVMSG" && strings.Contains(m.Content, *nick) // true
+	},
+	Action: func(irc *hbot.Bot, m *hbot.Message) bool {
+		irc.Reply(m, "I'm a karma bot! Use nick++ or nick-- to give/take karma.")
 		return false
 	},
 }
