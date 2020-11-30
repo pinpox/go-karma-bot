@@ -126,7 +126,7 @@ var karmaTrigger = hbot.Trigger{
 			irc.Reply(m, fmt.Sprintf("%v's karma got increased to: %v", user, k.Get(user)))
 		} else {
 			k.Add(user, -1)
-			irc.Reply(m, fmt.Sprintf("%v's karma got decresed to: %v", user, k.Get(user)))
+			irc.Reply(m, fmt.Sprintf("%v's karma got decreased to: %v", user, k.Get(user)))
 		}
 
 		return false
