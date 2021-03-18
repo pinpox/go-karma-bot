@@ -118,15 +118,21 @@ func main() {
 		bot.Password = password
 	}
 	irc, err := hbot.NewBot(serv, nick, saslOption, channels)
+
 	if err != nil {
 		panic(err)
 	}
 
+	fmt.Println("Bot created")
+
 	irc.AddTrigger(helpTrigger)
 	irc.AddTrigger(karmaTrigger)
 
+	fmt.Println("Added triggers")
+
 	logHandler := log.LvlFilterHandler(log.LvlInfo, log.StdoutHandler)
 	irc.Logger.SetHandler(logHandler)
+	fmt.Println("Logger ready. Starting up.")
 
 	irc.Run() // Blocks until exit
 	fmt.Println("Bot shutting down.")
