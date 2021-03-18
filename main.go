@@ -90,7 +90,7 @@ func main() {
 
 	serv = getEnv("IRC_BOT_SERVER", "chat.freenode.net:6697")
 	nick = getEnv("IRC_BOT_NICK", "go-karma-bot")
-	channel = getEnv("IRC_BOT_CHANNEL", "lounge-rocks") // TODO change to sane default
+	channel = getEnv("IRC_BOT_CHANNEL", "go-karma-bot")
 	password = getEnv("IRC_BOT_PASS", "very-secret")
 
 	var err error
