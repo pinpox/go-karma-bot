@@ -102,6 +102,8 @@ func main() {
 	var err error
 	k, err = NewKarmaDB("./karma.db")
 
+	fmt.Println("KARMADB created")
+
 	if err != nil {
 		panic(err)
 	}
@@ -123,7 +125,7 @@ func main() {
 	irc.AddTrigger(helpTrigger)
 	irc.AddTrigger(karmaTrigger)
 
-	logHandler := log.LvlFilterHandler(log.LvlWarn, log.StdoutHandler)
+	logHandler := log.LvlFilterHandler(log.LvlInfo, log.StdoutHandler)
 	irc.Logger.SetHandler(logHandler)
 
 	irc.Run() // Blocks until exit
@@ -155,7 +157,7 @@ var karmaTrigger = hbot.Trigger{
 	},
 }
 
-var rehelp *regexp.Regexp = regexp.MustCompile(`|^_^|`)
+var rehelp *regexp.Regexp = regexp.MustCompile(nick)
 var helpTrigger = hbot.Trigger{
 	Condition: func(bot *hbot.Bot, m *hbot.Message) bool {
 		return m.Command == "PRIVMSG" && strings.Contains(m.Content, nick) // true
