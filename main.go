@@ -116,7 +116,9 @@ func main() {
 
 	irc.AddTrigger(helpTrigger)
 	irc.AddTrigger(karmaTrigger)
-	irc.Logger.SetHandler(log.StdoutHandler)
+
+	logHandler := log.LvlFilterHandler(log.LvlWarn, log.StdoutHandler)
+	irc.Logger.SetHandler(logHandler)
 
 	irc.Run() // Blocks until exit
 	fmt.Println("Bot shutting down.")
