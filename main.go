@@ -52,20 +52,25 @@ func NewKarmaDB(path string) (*karma, error) {
 
 	var err error
 	var db *sql.DB
+	var stmt *sql.Stmt
 
-	if db, err = sql.Open("sqlite3", path); err == nil {
-
-		create := `CREATE TABLE IF NOT EXISTS karma (
+	create := `CREATE TABLE IF NOT EXISTS karma (
 		item text PRIMARY KEY,
 		karma int NOT NULL DEFAULT 0);`
 
-		if stmt, err := db.Prepare(create); err == nil {
-			if _, err := stmt.Exec(); err == nil {
-				return &karma{DB: db}, nil
-			}
-		}
+	if db, err = sql.Open("sqlite3", path); err != nil {
+		return nil, err
 	}
-	panic(err)
+
+	if stmt, err = db.Prepare(create); err != nil {
+		return nil, err
+	}
+
+	if _, err = stmt.Exec(); err != nil {
+		return nil, err
+	}
+
+	return &karma{DB: db}, nil
 }
 
 var serv = flag.String("server", "chat.freenode.net:6697", "hostname and port for irc server to connect to")
