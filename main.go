@@ -130,7 +130,7 @@ func main() {
 
 	fmt.Println("Added triggers")
 
-	logHandler := log.LvlFilterHandler(log.LvlInfo, log.StdoutHandler)
+	logHandler := log.LvlFilterHandler(log.LvlDebug, log.StdoutHandler)
 	irc.Logger.SetHandler(logHandler)
 	fmt.Println("Logger ready. Starting up.")
 
