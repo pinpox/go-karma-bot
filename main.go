@@ -2,9 +2,9 @@ package main
 
 import (
 	"database/sql"
-	"flag"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
+	"os"
 	"regexp"
 	"strings"
 
@@ -73,14 +73,25 @@ func NewKarmaDB(path string) (*karma, error) {
 	return &karma{DB: db}, nil
 }
 
-var serv = flag.String("server", "chat.freenode.net:6697", "hostname and port for irc server to connect to")
-var nick = flag.String("nick", "go-karma-bot", "nickname for the bot")
-var channel = flag.String("channel", "#go-karma-bot", "Initial channel to join")
-var password = flag.String("password", "go-karma-bot-password", "password for the bot")
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
+}
 
 var k *karma
+var serv string
+var nick string
+var channel string
+var password string
 
 func main() {
+
+	serv = getEnv("IRC_BOT_SERVER", "chat.freenode.net:6697")
+	nick = getEnv("IRC_BOT_NICK", "go-karma-bot")
+	channel = getEnv("IRC_BOT_CHANNEL", "lounge-rocks") // TODO change to sane default
+	password = getEnv("IRC_BOT_PASS", "very-secret")
 
 	var err error
 	k, err = NewKarmaDB("./karma.db")
@@ -89,18 +100,16 @@ func main() {
 		panic(err)
 	}
 
-	flag.Parse()
-
 	channels := func(bot *hbot.Bot) {
-		bot.Channels = []string{*channel}
+		bot.Channels = []string{channel}
 	}
 
 	saslOption := func(bot *hbot.Bot) {
 		bot.SSL = true
 		bot.SASL = true
-		bot.Password = *password
+		bot.Password = password
 	}
-	irc, err := hbot.NewBot(*serv, *nick, saslOption, channels)
+	irc, err := hbot.NewBot(serv, nick, saslOption, channels)
 	if err != nil {
 		panic(err)
 	}
@@ -141,7 +150,7 @@ var karmaTrigger = hbot.Trigger{
 var rehelp *regexp.Regexp = regexp.MustCompile(`|^_^|`)
 var helpTrigger = hbot.Trigger{
 	Condition: func(bot *hbot.Bot, m *hbot.Message) bool {
-		return m.Command == "PRIVMSG" && strings.Contains(m.Content, *nick) // true
+		return m.Command == "PRIVMSG" && strings.Contains(m.Content, nick) // true
 	},
 	Action: func(irc *hbot.Bot, m *hbot.Message) bool {
 		irc.Reply(m, "I'm a karma bot! Use nick++ or nick-- to give/take karma.")
