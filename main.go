@@ -93,6 +93,11 @@ func main() {
 	channel = getEnv("IRC_BOT_CHANNEL", "go-karma-bot")
 	password = getEnv("IRC_BOT_PASS", "very-secret")
 
+	fmt.Println("started with config:")
+	fmt.Println(serv)
+	fmt.Println(nick)
+	fmt.Println(channel)
+
 	var err error
 	k, err = NewKarmaDB("./karma.db")
 
