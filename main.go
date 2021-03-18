@@ -93,7 +93,7 @@ func main() {
 	channel = getEnv("IRC_BOT_CHANNEL", "go-karma-bot")
 	password = getEnv("IRC_BOT_PASS", "very-secret")
 
-	fmt.Println("started with config:")
+	fmt.Println("Startup configuration:")
 	fmt.Println("----------")
 	fmt.Println(serv)
 	fmt.Println(nick)
@@ -101,8 +101,6 @@ func main() {
 	fmt.Println("----------")
 	var err error
 	k, err = NewKarmaDB("./karma.db")
-
-	fmt.Println("KARMADB created")
 
 	if err != nil {
 		panic(err)
@@ -128,11 +126,9 @@ func main() {
 	irc.AddTrigger(helpTrigger)
 	irc.AddTrigger(karmaTrigger)
 
-	fmt.Println("Added triggers")
-
-	logHandler := log.LvlFilterHandler(log.LvlDebug, log.StdoutHandler)
+	// logHandler := log.LvlFilterHandler(log.LvlDebug, log.StdoutHandler)
+	logHandler := log.LvlFilterHandler(log.LvlInfo, log.StdoutHandler)
 	irc.Logger.SetHandler(logHandler)
-	fmt.Println("Logger ready. Starting up.")
 
 	irc.Run() // Blocks until exit
 	fmt.Println("Bot shutting down.")
