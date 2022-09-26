@@ -8,3 +8,18 @@ The following environment variables are available for configuration:
 - `IRC_BOT_NICK`
 - `IRC_BOT_CHANNEL`
 - `IRC_BOT_PASS`
+
+## NixOS
+
+Nix users may use the provided module as follows:
+
+```nix
+imports = [
+  go-karma-bot.nixosModules.go-karma-bot
+];
+
+# ...
+
+services.go-karma-bot.environmentFile = [ "/path/to/envFile" ];
+services.go-karma-bot.enable = true;
+```
