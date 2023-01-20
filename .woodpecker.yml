@@ -1,9 +1,4 @@
 platform: linux/amd64
-
-clone:
-  git:
-    image: woodpeckerci/plugin-git
-
 pipeline:
   build:
     image: bash
