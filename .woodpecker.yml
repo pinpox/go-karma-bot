@@ -5,6 +5,7 @@ clone:
     image: bash
     commands:
       - echo "test"
+      - uname
 
 pipeline:
   build:
