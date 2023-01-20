@@ -7,6 +7,12 @@ clone:
       - echo "test"
       - uname
       - env
+      - git init -b main
+      - git remote add origin https://github.com/pinpox/go-karma-bot.git
+      - "git fetch --no-tags --depth=1 --filter=tree:0 origin +refs/heads/main:"
+      - git reset --hard -q 52b65ad5b07337e257d95e5e463d5777c2c076d4
+      - git submodule update --init --recursive
+      - git lfs fetch
 
 pipeline:
   build:
