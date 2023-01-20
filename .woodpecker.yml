@@ -1,0 +1,7 @@
+platform: linux/amd64
+pipeline:
+  build:
+    image: bash
+    commands:
+      - echo "HELLO WORLD3"
+      - nix run nixpkgs#neofetch
