@@ -6,6 +6,7 @@ clone:
     commands:
       - echo "test"
       - uname
+      - env
 
 pipeline:
   build:
@@ -14,3 +15,4 @@ pipeline:
       - echo "HELLO WORLD3"
       - uname
       - nix run nixpkgs#neofetch
+      - nix build '.#go-karma-bot'
