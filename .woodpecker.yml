@@ -4,13 +4,11 @@ clone:
   git:
     image: bash
     commands:
-      - echo "test"
-      - uname
-      - env
-      - git init -b main
-      - git remote add origin https://github.com/pinpox/go-karma-bot.git
-      - "git fetch --no-tags --depth=1 --filter=tree:0 origin +refs/heads/main:"
-      - git reset --hard -q 52b65ad5b07337e257d95e5e463d5777c2c076d4
+      # - env
+      - git init -b $CI_COMMIT_BRANCH
+      - git remote add origin $CI_REPO_CLONE_URL
+      - "git fetch --no-tags --depth=1 --filter=tree:0 origin +$CI_COMMIT_REF:"
+      - git reset --hard -q $CI_COMMIT_SHA
       - git submodule update --init --recursive
       - git lfs fetch
 
@@ -18,7 +16,4 @@ pipeline:
   build:
     image: bash
     commands:
-      - echo "HELLO WORLD3"
-      - uname
-      - nix run nixpkgs#neofetch
       - nix build '.#go-karma-bot'
