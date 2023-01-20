@@ -1,4 +1,11 @@
 platform: linux/amd64
+
+clone:
+  git:
+    image: bash
+    commands:
+      - echo "test"
+
 pipeline:
   build:
     image: bash
