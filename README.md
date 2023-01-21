@@ -1,5 +1,7 @@
 # go-karma-bot
 
+[![status-badge](https://build.lounge.rocks/api/badges/pinpox/go-karma-bot/status.svg)](https://build.lounge.rocks/pinpox/go-karma-bot)
+
 ## Configuration
 
 The following environment variables are available for configuration:
