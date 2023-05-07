@@ -135,7 +135,7 @@ func main() {
 
 }
 
-var re *regexp.Regexp = regexp.MustCompile(`[a-zA-Z0-9]+(\+\+|--)`)
+var re *regexp.Regexp = regexp.MustCompile(`^[a-zA-Z0-9]+(\+\+|--)$`)
 var karmaTrigger = hbot.Trigger{
 	Condition: func(bot *hbot.Bot, m *hbot.Message) bool {
 		return m.Command == "PRIVMSG" && re.Match([]byte(m.Content))
