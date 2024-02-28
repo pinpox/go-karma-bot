@@ -30,7 +30,7 @@
             pname = "go-karma-bot";
             version = "v1.1";
             src = ./.;
-            vendorSha256 =
+            vendorHash =
               "sha256-si9G6t7SULor9GDxl548WKIeBe4Ik21f+lgNN+9bwzg=";
 
             meta = with lib; {
